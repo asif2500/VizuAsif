@@ -6,7 +6,7 @@ export type ValidationPrpos = {
 
 export type UrlProps = {
   glbUrl: string;
-  usdzUrl?: string;
+  usdzUrl: string;
 };
 
 export type CreateRestaurantProps = {

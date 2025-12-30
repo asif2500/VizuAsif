@@ -2,7 +2,6 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import GltfModel from "@/components/common/GLTFModel";
 import ARButton from "@/components/3DModel/ARButton";
-import ModelViewer from "@/components/3DModel/ModelViewer";
 
 const UserModelPage = () => {
   const [searchParams] = useSearchParams();
@@ -10,7 +9,7 @@ const UserModelPage = () => {
   // Get value from QR URL
   const code = searchParams.get("code");
   const [gltfUrl, setGltfUrl] = useState<string>("");
-  const [usdzUrl,setUsdzUrl]= useState<string>("")
+  const [usdzUrl, setUsdzUrl] = useState<string>("");
   useEffect(() => {
     if (!code) {
       console.log("Invalid QR code");
@@ -18,8 +17,13 @@ const UserModelPage = () => {
     }
 
     console.log("QR Code value:", code);
-    setGltfUrl(`https://res.cloudinary.com/dyyfyyb8u/image/upload/v1766747116/make_me_a_fruit_bowl_yduqvp.glb`);
-setUsdzUrl("https://res.cloudinary.com/dyyfyyb8u/image/upload/v1767017221/MER_static_f3e6qf.usdz")
+    setGltfUrl(
+      `https://res.cloudinary.com/dyyfyyb8u/image/upload/v1766747116/make_me_a_fruit_bowl_yduqvp.glb`
+    );
+    setUsdzUrl(
+      "https://res.cloudinary.com/dyyfyyb8u/image/upload/v1767017221/MER_static_f3e6qf.usdz"
+    );
+
     // NEXT STEP (later)
     // call API using this code
     // fetchUserByQr(code)
@@ -44,7 +48,14 @@ setUsdzUrl("https://res.cloudinary.com/dyyfyyb8u/image/upload/v1767017221/MER_st
             </div>
             {/* 3D Preview */}
             <div className="flex-1">
-            <ModelViewer glbUrl={gltfUrl} usdzUrl={usdzUrl}/>
+              {/* <ModelViewer glbUrl={gltfUrl} usdzUrl={usdzUrl}/> */}
+              <model-viewer
+                src={gltfUrl} 
+                ios-src={usdzUrl} 
+                ar
+                camera-controls
+                touch-action="pan-y"
+              ></model-viewer>
             </div>
           </div>
         ) : (
