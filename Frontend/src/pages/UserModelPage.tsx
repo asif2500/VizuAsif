@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import GltfModel from "@/components/common/GLTFModel";
-import ARButton from "@/components/3DModel/ARButton";
+// import ARButton from "@/components/3DModel/ARButton";
 // import ModelViewer from "@/components/3DModel/ModelViewer";
 import "@google/model-viewer";
 
@@ -46,7 +46,7 @@ const UserModelPage = () => {
           <div className="h-screen flex flex-col">
             {/* AR Button */}
             <div className="p-4 flex justify-center">
-              <ARButton glbUrl={gltfUrl} usdzUrl={usdzUrl} />
+              {/* <ARButton glbUrl={gltfUrl} usdzUrl={usdzUrl} /> */}
             </div>
             {/* 3D Preview */}
             <div className="flex-1">
@@ -58,6 +58,7 @@ const UserModelPage = () => {
                 ar-modes="scene-viewer quick-look"
                 camera-controls
                 style={{ width: "100%", height: "400px" }}
+
               />
             </div>
           </div>
