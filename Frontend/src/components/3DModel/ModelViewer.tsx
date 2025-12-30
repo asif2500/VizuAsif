@@ -9,15 +9,20 @@ const ModelViewer = ({ glbUrl, usdzUrl }: UrlProps) => {
 if (isIOS && usdzUrl) {
     return (
       <div className="flex flex-col items-center gap-3">
-        <p className="text-sm text-muted-foreground">View in AR</p>
-
-        <a
-          href={"../../assets/MER_static.usdz"}
-          rel="ar"
-          className="px-4 py-2 rounded-md bg-black text-white"
-        >
-          Open AR
-        </a>
+<a
+      href="../../assets/MER_static.usdz"
+      rel="ar"
+      style={{
+        display: "inline-block",
+        padding: "12px 20px",
+        background: "#000",
+        color: "#fff",
+        borderRadius: "8px",
+        textDecoration: "none"
+      }}
+    >
+      View in AR
+    </a>
       </div>
     );
   }
