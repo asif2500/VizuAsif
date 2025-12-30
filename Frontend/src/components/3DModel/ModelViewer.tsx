@@ -5,13 +5,14 @@ import { isIOS } from "@/lib/function";
 import { OrbitControls } from "@react-three/drei";
 
 const ModelViewer = ({ glbUrl, usdzUrl }: UrlProps) => {
-  if (isIOS && usdzUrl) {
+
+if (isIOS && usdzUrl) {
     return (
       <div className="flex flex-col items-center gap-3">
         <p className="text-sm text-muted-foreground">View in AR</p>
 
         <a
-          href={usdzUrl}
+          href={"../../assets/MER_static.usdz"}
           rel="ar"
           className="px-4 py-2 rounded-md bg-black text-white"
         >

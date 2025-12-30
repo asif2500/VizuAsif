@@ -2,6 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import GltfModel from "@/components/common/GLTFModel";
 import ARButton from "@/components/3DModel/ARButton";
+import ModelViewer from "@/components/3DModel/ModelViewer";
 
 const UserModelPage = () => {
   const [searchParams] = useSearchParams();
@@ -48,14 +49,7 @@ const UserModelPage = () => {
             </div>
             {/* 3D Preview */}
             <div className="flex-1">
-              {/* <ModelViewer glbUrl={gltfUrl} usdzUrl={usdzUrl}/> */}
-              <model-viewer
-                src={gltfUrl} 
-                ios-src={usdzUrl} 
-                ar
-                camera-controls
-                touch-action="pan-y"
-              ></model-viewer>
+              <ModelViewer glbUrl={gltfUrl} usdzUrl={usdzUrl}/>
             </div>
           </div>
         ) : (
