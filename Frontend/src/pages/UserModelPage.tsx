@@ -25,7 +25,8 @@ const UserModelPage = () => {
     );
     setUsdzUrl(
       // "https://res.cloudinary.com/dyyfyyb8u/image/upload/v1767017221/MER_static_f3e6qf.usdz"
-      "https://developer.apple.com/augmented-reality/quick-look/models/teapot/teapot.usdz"
+      // "https://developer.apple.com/augmented-reality/quick-look/models/teapot/teapot.usdz"
+      "https://marceltech.com/demo/glbs/glove_baseball_mtl_variant.usdz"
     );
 
     // NEXT STEP (later)
