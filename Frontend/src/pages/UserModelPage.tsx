@@ -1,9 +1,10 @@
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import GltfModel from "@/components/common/GLTFModel";
-// import ARButton from "@/components/3DModel/ARButton";
+import ARButton from "@/components/3DModel/ARButton";
 // import ModelViewer from "@/components/3DModel/ModelViewer";
 import "@google/model-viewer";
+import { isIOS } from "@/lib/function";
 
 const UserModelPage = () => {
   const [searchParams] = useSearchParams();
@@ -47,7 +48,8 @@ const UserModelPage = () => {
           <div className="h-screen flex flex-col">
             {/* AR Button */}
             <div className="p-4 flex justify-center">
-              {/* <ARButton glbUrl={gltfUrl} usdzUrl={usdzUrl} /> */}
+              {!isIOS && <ARButton glbUrl={gltfUrl} usdzUrl={usdzUrl} />}
+              
             </div>
             {/* 3D Preview */}
             <div className="flex-1">
