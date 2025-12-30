@@ -10,11 +10,11 @@ const app = express();
 connectDB();
 
 // Fix 1: Add credentials: true and remove trailing slash
-const allowedOrigin = "http://localhost:5173";
+// const allowedOrigin = "http://localhost:5173" || 'https://famous-maamoul-d7fe87.netlify.app';
 
 app.use(
   cors({
-    origin: allowedOrigin,
+    origin: "https://famous-maamoul-d7fe87.netlify.app",
     credentials: true, // IMPORTANT: Add this
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Add OPTIONS for preflight
     allowedHeaders: ["Content-Type", "Authorization"],

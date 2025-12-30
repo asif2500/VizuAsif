@@ -90,7 +90,7 @@ export const createRestaurantAPI = async (
     }
   } catch (error: any) {
     setLoading(false);
-    throw error?.response?.data || { message: "Admin login failed" };
+    throw error?.response?.data || { message: "Admin Register failed" };
   }
 };
 
@@ -121,7 +121,7 @@ export const getRestaurantByIdAPI = async (
     if (data.success) setData(data.data);
   } catch (error: any) {
     setLoading(false);
-    throw error?.response?.data || { message: "Admin login failed" };
+    throw error?.response?.data || { message: "Get Restaurant By ID failed" };
   }
 };
 
