@@ -2619,11 +2619,6 @@ three-stdlib@^2.35.6:
     fflate "^0.6.9"
     potpack "^1.0.1"
 
-three-usdz-loader@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/three-usdz-loader/-/three-usdz-loader-1.0.9.tgz#b6a8ab8b5958cb76c56a35ccaf65ee702966c85f"
-  integrity sha512-UOP2XHHT4dUIZInhVPQieVXFyxpSE1ApMEJZVLDdo5j5flp1KSGlY1uGE3To7KhDIks+kAOmsCnNDjQ3RvjMFA==
-
 three@^0.170.0:
   version "0.170.0"
   resolved "https://registry.npmjs.org/three/-/three-0.170.0.tgz"
