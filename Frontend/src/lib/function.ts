@@ -17,7 +17,7 @@ export const launchAR = (glbUrl:string,usdzUrl:string) => {
     // else if (isIOS && usdzUrl) {
     //   window.location.href = usdzUrl;
     // } 
-    else {
-      alert("AR not supported on this device");
-    }
+    // else {
+    //   alert("AR not supported on this device");
+    // }
   };
