@@ -19,30 +19,34 @@ import { MoreVertical, Eye, Pencil, Trash, CreditCard } from "lucide-react";
 import { useEffect, useState } from "react";
 import { deleteRestaurantAPI, getAllRestaurantAPI } from "@/apis/auth.api";
 import { Label } from "@/components/ui/label";
-import type { DeleteRestaurantProps, RestaurantArrayProps } from "@/lib/type";
+import type { DeleteRestaurantProps } from "@/lib/type";
 import {
   CreateRestaurant,
   DeleteDialog,
   ViewRestaurant,
 } from "@/components/dialougs";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 
 const Restaurants = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [restaurants, setRestaurants] = useState<RestaurantArrayProps>([]);
+  const dispatch = useAppDispatch();
+  const { list, loading } = useAppSelector((state) => state.restaurant);
 
   const [openAddRest, setOpenAddRest] = useState<boolean>(false);
   const [viewRest, setViewRest] = useState({ visible: false, _id: "" });
 
   const [deleteRestaurant, setDeleteRestaurant] =
     useState<DeleteRestaurantProps>({
-      loading: false,
       visible: false,
       _id: "",
     });
 
+  const handleDelete = () => {
+     dispatch(deleteRestaurantAPI(deleteRestaurant._id, setDeleteRestaurant));
+  };
+
   useEffect(() => {
-    getAllRestaurantAPI(setRestaurants, setLoading);
-  }, []);
+    dispatch(getAllRestaurantAPI());
+  }, [dispatch]);
 
   return (
     <div className="p-6 ">
@@ -70,7 +74,7 @@ const Restaurants = () => {
           </TableHeader>
 
           <TableBody>
-            {restaurants.map((restaurant) => (
+            {list.map((restaurant) => (
               <TableRow key={restaurant._id}>
                 <TableCell>{restaurant.name}</TableCell>
                 <TableCell>{restaurant.phone}</TableCell>
@@ -104,10 +108,12 @@ const Restaurants = () => {
                                 setDeleteRestaurant({
                                   visible: true,
                                   _id: restaurant._id,
-                                  loading: false,
                                 });
-                              }else if (content.title === "View") {
-                                setViewRest({visible:true, _id: restaurant._id,})
+                              } else if (content.title === "View") {
+                                setViewRest({
+                                  visible: true,
+                                  _id: restaurant._id,
+                                });
                               }
                             }}
                             key={content.title}
@@ -143,20 +149,12 @@ const Restaurants = () => {
         open={deleteRestaurant.visible}
         actionText="Delete"
         description="This action can not be undone"
-        isLoading={deleteRestaurant.loading}
+        isLoading={loading}
         title="Delete Restaurant"
         onClose={() =>
-          setDeleteRestaurant({ _id: "", loading: false, visible: false })
+          setDeleteRestaurant({ _id: "",  visible: false })
         }
-        onAction={() =>
-          deleteRestaurantAPI(deleteRestaurant._id, () =>
-            setDeleteRestaurant({
-              _id: "",
-              loading: false,
-              visible: false,
-            })
-          )
-        }
+        onAction={handleDelete}
       />
     </div>
   );

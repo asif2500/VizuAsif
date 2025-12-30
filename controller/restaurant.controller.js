@@ -28,7 +28,7 @@ export const createRestaurant = asyncHandler(async (req, res) => {
   res.status(201).json({
     success: true,
     message: "Restaurant created",
-    restaurantId: restaurant._id,
+    data: restaurant,
   });
 });
 

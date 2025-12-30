@@ -12,8 +12,10 @@ import { Loader2 } from "lucide-react";
 import { Validation } from "../ui/validation";
 import type { CreateRestaurantProps, RestaurantFields } from "@/lib/type";
 import { createRestaurantAPI } from "@/apis/auth.api";
+import { useDispatch } from "react-redux";
 
 export const CreateRestaurant = ({ open, onClose }: CreateRestaurantProps) => {
+  const dispatch = useDispatch()
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -28,9 +30,7 @@ export const CreateRestaurant = ({ open, onClose }: CreateRestaurantProps) => {
   };
 
   const handleSubmit = async () => {
-    createRestaurantAPI(form,setLoading,setError,onClose,setForm);
-
-   
+    createRestaurantAPI(form,setLoading,setError,onClose,setForm)(dispatch);
   };
 
   return (

@@ -14,7 +14,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: "https://famous-maamoul-d7fe87.netlify.app",
+    origin: "http://localhost:5173",
     credentials: true, // IMPORTANT: Add this
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Add OPTIONS for preflight
     allowedHeaders: ["Content-Type", "Authorization"],

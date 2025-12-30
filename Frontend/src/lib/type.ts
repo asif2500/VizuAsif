@@ -9,15 +9,6 @@ export type UrlProps = {
   usdzUrl?: string;
 };
 
-export type RestaurantProps = {
-  _id: string;
-  name: string;
-  phone: string;
-  subscriptionStatus: string;
-};
-
-export type RestaurantArrayProps = RestaurantProps[];
-
 export type CreateRestaurantProps = {
   open: boolean;
   onClose: () => void;
@@ -40,7 +31,6 @@ export type DeleteDialogProps = {
 };
 
 export type DeleteRestaurantProps = {
-  loading: boolean,
   visible: boolean,
   _id: string
 }

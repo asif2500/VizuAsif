@@ -1,15 +1,17 @@
 import { api } from ".";
-import type {
-  LoginPayload,
-  //  RegisterPayload
-} from "@/lib/interface";
+import type { LoginPayload } from "@/lib/interface";
 import type { Dispatch, SetStateAction } from "react";
-import type {
-  DeleteRestaurantProps,
-  RestaurantArrayProps,
-  RestaurantFields,
-} from "@/lib/type";
+import type {  DeleteRestaurantProps, RestaurantFields } from "@/lib/type";
 import type { NavigateFunction } from "react-router-dom";
+import type { AppDispatch } from "@/redux";
+import {
+  addRestaurant,
+  removeRestaurant,
+  setRestaurantError,
+  setRestaurantLoading,
+  setRestaurants,
+  setSelectedRestaurant,
+} from "@/redux/slices/restaurantSlice";
 
 // export const adminRegisterAPI = async (payload: RegisterPayload) => {
 //   try {
@@ -70,86 +72,87 @@ export const logoutAPI = () => {
   localStorage.removeItem("token");
 };
 
-export const createRestaurantAPI = async (
+export const createRestaurantAPI = (
   payload: RestaurantFields,
   setLoading: Dispatch<SetStateAction<boolean>>,
   setError: Dispatch<SetStateAction<string>>,
   onClose: () => void,
   setForm: Dispatch<SetStateAction<RestaurantFields>>
 ) => {
-  setLoading(true);
-  try {
-    const { data } = await api.post("/rest/create-restaurant", payload);
-    setLoading(false);
-    console.log("==>", data);
-    if (data.success) {
-      onClose();
-      setForm({ name: "", phone: "", password: "" });
-    } else {
-      setError(data.message);
+  return async (dispatch: AppDispatch) => {
+    setLoading(true);
+    try {
+      const { data } = await api.post("/rest/create-restaurant", payload);
+      setLoading(false);
+      if (data.success) {
+        onClose();
+        setForm({ name: "", phone: "", password: "" });
+        // getAllRestaurantAPI()(dispatch);
+        dispatch(addRestaurant(data.data))
+      } else {
+        setError(data.message);
+      }
+    } catch (error: any) {
+      setLoading(false);
+      throw error?.response?.data || { message: "Admin Register failed" };
     }
-  } catch (error: any) {
-    setLoading(false);
-    throw error?.response?.data || { message: "Admin Register failed" };
-  }
+  };
 };
 
-export const getAllRestaurantAPI = async (
-  setData: Dispatch<SetStateAction<RestaurantArrayProps>>,
-  setLoading: Dispatch<SetStateAction<boolean>>
-) => {
-  setLoading(true);
-  try {
-    const { data } = await api.get("/rest/get-all-restaurant");
-    setData(data.data);
-    setLoading(false);
-  } catch (error) {
-    setLoading(false);
-    console.error(error);
-  }
+export const getAllRestaurantAPI = () => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setRestaurantLoading(true));
+      const { data } = await api.get("/rest/get-all-restaurant");
+      dispatch(setRestaurants(data.data));
+    } catch (err: any) {
+      dispatch(setRestaurantError("Failed to fetch restaurants"));
+    }
+  };
 };
 
-export const getRestaurantByIdAPI = async (
+export const getRestaurantByIdAPI =  (
   _id: string,
-  setData: any,
-  setLoading: Dispatch<SetStateAction<boolean>>
 ) => {
-  setLoading(true);
-  try {
-    const { data } = await api.get(`/rest/get-restaurant/${_id}`);
-    setLoading(false);
-    if (data.success) setData(data.data);
-  } catch (error: any) {
-    setLoading(false);
-    throw error?.response?.data || { message: "Get Restaurant By ID failed" };
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setRestaurantLoading(true));
+      const { data } = await api.get(`/rest/get-restaurant/${_id}`);
+      dispatch(setRestaurantLoading(false));
+      if (data.success) dispatch(setSelectedRestaurant(data.data));
+    } catch (error: any) {
+      dispatch(setRestaurantError("Failed to fetch restaurants"));
+      throw error?.response?.data || { message: "Get Restaurant By ID failed" };
+    }
   }
 };
 
-export const deleteRestaurantAPI = async (
-  _id: string,
+
+export const deleteRestaurantAPI = (
+  id: string,
   setDeleteRestaurant: Dispatch<SetStateAction<DeleteRestaurantProps>>
 ) => {
-  setDeleteRestaurant((prev) => ({
-    ...prev,
-    loading: true,
-  }));
-  try {
-    const { data } = await api.delete(`/rest/delete-restaurant/${_id}`);
-    setDeleteRestaurant((prev) => ({
-      ...prev,
-      loading: false,
-    }));
-    if (data.success) {
-      setDeleteRestaurant((prev) => ({
-        ...prev,
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setRestaurantLoading(true));
+  
+      const { data } = await api.delete(`/rest/delete-restaurant/${id}`);
+  
+      if (!data.success) {
+        throw new Error(data.message || "Delete failed");
+      }
+  
+      dispatch(removeRestaurant(id));
+      dispatch(setRestaurantLoading(false));
+      setDeleteRestaurant({
+        _id: "",
         visible: false,
-      }));
+      });
+      return true;
+    } catch (error: any) {
+      dispatch(setRestaurantLoading(false));
+      dispatch(setRestaurantError("Unable to delete restaurant"));
+      throw error?.response?.data || { message: "Unable to delete restaurant" };
     }
-  } catch (error: any) {
-    setDeleteRestaurant((prev) => ({
-      ...prev,
-      loading: false,
-    }));
-    throw error?.response?.data || { message: "Unable to Delete" };
   }
 };
