@@ -23,7 +23,8 @@ const UserModelPage = () => {
       `https://res.cloudinary.com/dyyfyyb8u/image/upload/v1766747116/make_me_a_fruit_bowl_yduqvp.glb`
     );
     setUsdzUrl(
-      "https://res.cloudinary.com/dyyfyyb8u/image/upload/v1767017221/MER_static_f3e6qf.usdz"
+      // "https://res.cloudinary.com/dyyfyyb8u/image/upload/v1767017221/MER_static_f3e6qf.usdz"
+      "https://developer.apple.com/augmented-reality/quick-look/models/teapot/teapot.usdz"
     );
 
     // NEXT STEP (later)
@@ -55,7 +56,7 @@ const UserModelPage = () => {
                 src={gltfUrl}
                 ios-src={usdzUrl}
                 ar
-                ar-modes="scene-viewer quick-look"
+                ar-modes="quick-look"
                 camera-controls
                 style={{ width: "100%", height: "400px" }}
 
