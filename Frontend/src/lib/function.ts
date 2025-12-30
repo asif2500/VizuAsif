@@ -1,7 +1,9 @@
 export const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 export const isAndroid = /Android/.test(navigator.userAgent);
 
-export const launchAR = (glbUrl:string,usdzUrl:string) => {
+export const launchAR = (glbUrl:string,
+//  usdzUrl:string
+) => {
   const sceneViewerUrl = `https://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(
     glbUrl
   )}&mode=ar_preferred`;
