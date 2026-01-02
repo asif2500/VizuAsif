@@ -2,9 +2,11 @@ import cors from "cors";
 import express from "express";
 
 import connectDB from "./utils/db.js";
-import modelRoute from "./router/model.routes.js";
+import modelRoute from "./router/3dmodel.routes.js";
 import adminRoutes from "./router/admin.routes.js";
 import restaurantRoutes from "./router/restaurant.routes.js";
+import pricingPlanRoutes from "./router/pricingPlan.route.js";
+import PaymentRoutes from "./router/payment.route.js";
 
 const app = express();
 connectDB();
@@ -27,6 +29,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/uploads", modelRoute);
 app.use("/api/rest", restaurantRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/pricing-plan", pricingPlanRoutes);
+app.use("/api/payment", PaymentRoutes);
 
 app.listen(5000, () => {
   console.log("Backend running on http://localhost:5000");

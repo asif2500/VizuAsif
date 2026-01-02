@@ -1,6 +1,6 @@
 import { hash, compare } from "bcryptjs";
 import jwt from "jsonwebtoken";
-import Admin from "../model/admin.model.js";
+import Admin from "../models/admin.model.js";
 import asyncHandler from "express-async-handler";
 
 export const register = asyncHandler(async (req, res) => {
@@ -37,7 +37,7 @@ export const register = asyncHandler(async (req, res) => {
       success: true,
     });
   } catch (err) {
-    res.status(500).json({ error: "Registration failed" });
+    res.status(500).json({ success: false, error: "Registration failed" });
   }
 });
 

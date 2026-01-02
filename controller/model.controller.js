@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import model from "../model/model.model.js";
+import model from "../models/3dmodel.model.js";
 import fs from "fs";
 import cloud from "../utils/cloudinary.js";
 

@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const userSchema = new Schema(
+const restaurantSchema = new Schema(
   {
     name: {
       type: String,
@@ -28,8 +28,24 @@ const userSchema = new Schema(
       type: String,
       default: "inactive",
     },
+    models: [
+      {
+        count: {
+          type: Number,
+          default: 0,
+        },
+        pricePlanID: {
+          type: Schema.Types.ObjectId,
+          ref: "PricingPlan",
+        },
+        isActive: {
+          type: Boolean,
+          default: false,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );
 
-export default model("restaurant", userSchema);
+export default model("restaurant", restaurantSchema);

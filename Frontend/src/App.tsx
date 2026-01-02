@@ -16,6 +16,8 @@ import AdminLogin from "./pages/admin/login";
 import AdminSignup from "./pages/admin/register";
 import AdminDashboard from "./pages/admin/dashboard";
 import AdminRestaurants from "./pages/admin/restaurants";
+import AdminRestaurantsPayment from "./pages/admin/AdminRestaurantsPayment"
+import AdminPricePlanSetting from "./pages/admin/AdminPricePlanSetting"
 
 // Restaurant Pages
 import RestaurantLogin from "./pages/restaurant/login";
@@ -41,6 +43,8 @@ function App() {
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="restaurants" element={<AdminRestaurants />} />
+            <Route path="payment/restaurants" element={<AdminRestaurantsPayment />} />
+            <Route path="price-plan" element={<AdminPricePlanSetting />} />
           </Route>
         </Route>
 

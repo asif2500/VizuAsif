@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {  restaurantLoginAPI } from "@/apis/auth.api";
+import {  restaurantLoginAPI } from "@/apis/restaurant.api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

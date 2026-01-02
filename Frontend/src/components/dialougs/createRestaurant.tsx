@@ -1,23 +1,23 @@
-import { useState } from "react";
 import {
   Dialog,
-  DialogContent,
-  DialogHeader,
   DialogTitle,
+  DialogHeader,
+  DialogContent,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Validation } from "../ui/validation";
+import { Button } from "@/components/ui/button";
+import { createRestaurantAPI } from "@/apis/restaurant.api";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import type { CreateRestaurantProps, RestaurantFields } from "@/lib/type";
-import { createRestaurantAPI } from "@/apis/auth.api";
-import { useDispatch } from "react-redux";
+import { setRestaurantError } from "@/redux/slices/restaurantSlice";
 
 export const CreateRestaurant = ({ open, onClose }: CreateRestaurantProps) => {
-  const dispatch = useDispatch()
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const dispatch = useAppDispatch()
+  const { loading,error } = useAppSelector((state) => state.restaurant);
 
   const [form, setForm] = useState<RestaurantFields>({
     name: "",
@@ -25,14 +25,12 @@ export const CreateRestaurant = ({ open, onClose }: CreateRestaurantProps) => {
     password: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => 
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
-  const handleSubmit = async () => {
-    createRestaurantAPI(form,setLoading,setError,onClose,setForm)(dispatch);
-  };
-
+  const handleSubmit =  () => {
+    dispatch(setRestaurantError(""));
+    createRestaurantAPI(form,onClose,setForm)(dispatch)}
   return (
     <Dialog open={open} onOpenChange={onClose}>
 

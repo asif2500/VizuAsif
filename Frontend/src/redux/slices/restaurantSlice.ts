@@ -1,47 +1,58 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type {PayloadAction} from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { PlanProps } from "@/lib/type";
 
-export interface Restaurant {
+export interface RestaurantType {
+  _id: string;
+  name: string;
+  phone: string;
+  role: "RESTAURANT";
+  isActive: boolean;
+  subscriptionStatus: "active" | "inactive";
+  createdAt: string;
+  updatedAt: string;
+  models?: {
+    count: number;
     _id: string;
-    name: string;
-    phone: string;
-    role: "RESTAURANT";
     isActive: boolean;
-    subscriptionStatus: "active" | "inactive";
-    createdAt: string;
-    updatedAt: string;
-  }
-  
-  interface RestaurantState {
-    list: Restaurant[];
-    selected: Restaurant | null;
-    loading: boolean;
-    error: string | null;
-  }
+    pricePlanID: PlanProps;
+  }[];
+}
 
-  const initialState: RestaurantState = {
-    list: [],
-    selected: null,
-    loading: false,
-    error: null,
-  };
+interface RestaurantState {
+  list: RestaurantType[];
+  selected: RestaurantType | null;
+  loading: boolean;
+  error: string | null;
+  models: { count: number; _id: string }[];
+}
 
+const initialState: RestaurantState = {
+  list: [],
+  selected: null,
+  loading: false,
+  error: null,
+  models: [],
+};
 
 const restaurantSlice = createSlice({
   name: "restaurant",
   initialState,
   reducers: {
     // 🔄 When fetching all restaurants
-    setRestaurants: (state, action: PayloadAction<Restaurant[]>) => {
+    setRestaurants: (state, action: PayloadAction<RestaurantType[]>) => {
       state.list = action.payload;
       state.loading = false;
       state.error = null;
     },
 
+    setRestaurantModel: (state, action) => {
+      state.models = action.payload;
+    },
     // 👁 View / Edit restaurant
     setSelectedRestaurant: (
       state,
-      action: PayloadAction<Restaurant | null>
+      action: PayloadAction<RestaurantType | null>
     ) => {
       state.selected = action.payload;
     },
@@ -58,13 +69,13 @@ const restaurantSlice = createSlice({
     },
 
     // ➕ Add restaurant (after create)
-    addRestaurant: (state, action: PayloadAction<Restaurant>) => {
+    addRestaurant: (state, action: PayloadAction<RestaurantType>) => {
       state.list.unshift(action.payload);
     },
 
     // 🗑 Delete restaurant
     removeRestaurant: (state, action: PayloadAction<string>) => {
-      state.list = state.list.filter(r => r._id !== action.payload);
+      state.list = state.list.filter((r) => r._id !== action.payload);
     },
   },
 });
@@ -76,6 +87,7 @@ export const {
   setRestaurantError,
   addRestaurant,
   removeRestaurant,
+  setRestaurantModel,
 } = restaurantSlice.actions;
 
 export default restaurantSlice.reducer;

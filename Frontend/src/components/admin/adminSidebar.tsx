@@ -2,9 +2,10 @@ import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   Store,
-  Box,
-  CreditCard,
-  Settings,
+  // Box,
+  // CreditCard,
+  // Settings,
+  DollarSign,
 } from "lucide-react";
 
 const menuItems = [
@@ -18,20 +19,25 @@ const menuItems = [
     icon: Store,
     path: "/admin/restaurants",
   },
+  // {
+  //   label: "3D Models",
+  //   icon: Box,
+  //   path: "/admin/models",
+  // },
+  // {
+  //   label: "Payments",
+  //   icon: CreditCard,
+  //   path: "/admin/payments",
+  // },
+  // {
+  //   label: "Settings",
+  //   icon: Settings,
+  //   path: "/admin/settings",
+  // },
   {
-    label: "3D Models",
-    icon: Box,
-    path: "/admin/models",
-  },
-  {
-    label: "Payments",
-    icon: CreditCard,
-    path: "/admin/payments",
-  },
-  {
-    label: "Settings",
-    icon: Settings,
-    path: "/admin/settings",
+    label: "Payment Setting",
+    icon: DollarSign,
+    path: "/admin/price-plan",
   },
 ];
 

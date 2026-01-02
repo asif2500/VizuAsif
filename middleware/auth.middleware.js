@@ -5,7 +5,9 @@ export const authGuard = (roles = []) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-      return res.status(401).json({ error: "No token provided" });
+      return res
+        .status(401)
+        .json({ success: false, error: "No token provided" });
     }
 
     const token = authHeader.split(" ")[1];
@@ -14,13 +16,13 @@ export const authGuard = (roles = []) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       if (roles.length && !roles.includes(decoded.role)) {
-        return res.status(403).json({ error: "Access denied" });
+        return res.status(403).json({ success: false, error: "Access denied" });
       }
 
       req.user = decoded;
       next();
     } catch (err) {
-      return res.status(401).json({ error: "Invalid token" });
+      return res.status(401).json({ success: false, error: "Invalid token" });
     }
   };
 };

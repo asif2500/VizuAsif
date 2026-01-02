@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { Loader2 } from "lucide-react";
 import { KeyValueInfo } from "../common/key-value-info";
 import type { ViewRestaurantProps } from "@/lib/type";
-import { getRestaurantByIdAPI } from "@/apis/auth.api";
+import { getRestaurantByIdAPI } from "@/apis/restaurant.api";
 
 const ViewRestaurant = ({ open, onClose, id }: ViewRestaurantProps) => {
   const dispatch = useAppDispatch();
