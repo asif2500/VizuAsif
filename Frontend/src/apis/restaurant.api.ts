@@ -154,3 +154,38 @@ export const saveModelForRestaurantAPI = (
     }
   };
 };
+
+export const save3DModelForRestaurantAPI = (
+  restaurantID: string,
+  formData: FormData,
+  onClose: () => void,
+  setForm: Dispatch<
+    SetStateAction<{
+      title: string;
+      glb: File | null;
+      usdz: File | null;
+      thumbnail: File | null;
+    }>
+  >,
+  setLoading: Dispatch<SetStateAction<boolean>>,
+  setError: Dispatch<SetStateAction<string>>
+) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const { data } = await api.post(
+        `rest/save-3d-model-file/${restaurantID}`,
+        formData
+      );
+      if (data.success) {
+        onClose();
+        setForm({ title: "", glb: null, usdz: null, thumbnail: null });
+      } else {
+        setError(data.error);
+      }
+    } catch (err: any) {
+      setError(err.response.data.error);
+    } finally {
+      setLoading(false);
+    }
+  };
+};

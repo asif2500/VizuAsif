@@ -145,3 +145,27 @@ export const applyForModel = asyncHandler(async (req, res) => {
     data: restaurant,
   });
 });
+
+export const uploadModelFile = asyncHandler(async (req, res) => {
+  const { restaurantID } = req.params;
+  const file = req.file;
+  const { title } = req.body;
+
+  const restaurant = await User.findById(restaurantID);
+  if (!restaurant) {
+    return res
+      .status(400)
+      .json({ success: false, error: "Restaurant not found" });
+  }
+
+  restaurant.threeDModels.push({ file: file.path });
+  await restaurant.save();
+});
+
+export const getModelFile = asyncHandler(async (req, res) => {
+  const { restaurantID } = req.params;
+});
+
+export const deleteModelFile = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+});

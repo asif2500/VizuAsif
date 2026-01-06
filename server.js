@@ -2,7 +2,6 @@ import cors from "cors";
 import express from "express";
 
 import connectDB from "./utils/db.js";
-import modelRoute from "./router/3dmodel.routes.js";
 import adminRoutes from "./router/admin.routes.js";
 import restaurantRoutes from "./router/restaurant.routes.js";
 import pricingPlanRoutes from "./router/pricingPlan.route.js";
@@ -26,7 +25,6 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/uploads", modelRoute);
 app.use("/api/rest", restaurantRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/pricing-plan", pricingPlanRoutes);

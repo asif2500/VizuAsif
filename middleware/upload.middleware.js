@@ -7,16 +7,9 @@ const storage = multer.diskStorage({
   },
 });
 
-export const uploadGLTF = multer({
+export const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
-    if (
-      file.originalname.endsWith(".gltf") ||
-      file.originalname.endsWith(".glb")
-    ) {
-      cb(null, true);
-    } else {
-      cb(new Error("Only GLTF/GLB allowed"));
-    }
+    cb(null, true);
   },
 });

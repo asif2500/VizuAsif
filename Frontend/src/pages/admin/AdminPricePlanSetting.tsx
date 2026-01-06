@@ -6,7 +6,14 @@ import {
   updatePricingPlan,
 } from "@/apis/payment.api";
 import PricingPlanDialog from "@/components/dialougs/add-edit-Price-Plan";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type PricingPlan = {
   _id: string;
@@ -42,8 +49,8 @@ const AdminBasePriceSetting = () => {
         </Button>
       </div>
 
-    {/* Table */}
-    <div className="border rounded-lg">
+      {/* Table */}
+      <div className="border rounded-lg">
         <Table>
           <TableHeader>
             <TableRow>
@@ -68,17 +75,16 @@ const AdminBasePriceSetting = () => {
                   <TableCell>{plan.monthlyFee}</TableCell>
                   <TableCell>{plan.perModel}</TableCell>
                   <TableCell className="text-right">
-                  <Button
-  variant="outline"
-  size="sm"
-  onClick={() => {
-    setEditingPlan(plan); // pass whole plan
-    setOpen(true);
-  }}
->
-  Edit
-</Button>
-
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setEditingPlan(plan); // pass whole plan
+                        setOpen(true);
+                      }}
+                    >
+                      Edit
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))

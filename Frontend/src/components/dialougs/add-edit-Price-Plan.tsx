@@ -43,9 +43,7 @@ const PricingPlanDialog = ({
 
   useEffect(() => {
     if (open) {
-      setForm(
-        initialData ?? { name: "", monthlyFee: 0, perModel: 0 }
-      );
+      setForm(initialData ?? { name: "", monthlyFee: 0, perModel: 0 });
       setError(null);
     }
   }, [open, initialData]);
@@ -66,8 +64,8 @@ const PricingPlanDialog = ({
 
     try {
       await submitAction(form);
-      onSuccess();     // refresh table
-      onClose();       // close dialog ONLY on success
+      onSuccess(); // refresh table
+      onClose(); // close dialog ONLY on success
     } catch (err: any) {
       setError(err.response.data.error || "Something went wrong");
     } finally {
@@ -96,9 +94,7 @@ const PricingPlanDialog = ({
             <Input
               type="number"
               value={form.monthlyFee}
-              onChange={(e) =>
-                handleChange("monthlyFee", e.target.value)
-              }
+              onChange={(e) => handleChange("monthlyFee", e.target.value)}
             />
           </div>
 
@@ -107,17 +103,11 @@ const PricingPlanDialog = ({
             <Input
               type="number"
               value={form.perModel}
-              onChange={(e) =>
-                handleChange("perModel", e.target.value)
-              }
+              onChange={(e) => handleChange("perModel", e.target.value)}
             />
           </div>
-<Validation text={error} visible={error !== ""}/>
-          <Button
-            className="w-full"
-            onClick={handleSubmit}
-            disabled={loading}
-          >
+          <Validation text={error} visible={error !== ""} />
+          <Button className="w-full" onClick={handleSubmit} disabled={loading}>
             {loading ? "Saving..." : "Save"}
           </Button>
         </div>

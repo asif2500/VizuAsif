@@ -51,9 +51,9 @@ export type EditRestaurantProps = {
 };
 
 export type ViewRestaurantModelProps = {
+  restaurantID: string;
   open: boolean;
   onClose: () => void;
-  id: string;
 };
 
 export type ApplyForModelProps = {

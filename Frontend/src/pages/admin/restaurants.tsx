@@ -119,7 +119,7 @@ const Restaurants = () => {
                   <TableCell>{restaurant.name}</TableCell>
                   <TableCell>{restaurant.phone}</TableCell>
                   <TableCell>
-                    <span className="text-green-600 font-medium">
+                    <span className={`${restaurant.subscriptionStatus === "active" ? "text-green-600 font-medium" : "text-red-600 font-medium"} capitalize`}>
                       {restaurant.subscriptionStatus}
                     </span>
                   </TableCell>
@@ -279,7 +279,7 @@ const Restaurants = () => {
       />
 
       <RestaurantModels
-        id={restModels._id}
+        restaurantID={restModels._id}
         open={restModels.visible}
         onClose={() => setRestModels({ visible: false, _id: "" })}
       />

@@ -44,6 +44,14 @@ const restaurantSchema = new Schema(
         },
       },
     ],
+    threeDModels: [
+      {
+        title: String,
+        glbUrl: String,
+        usdzUrl: String,
+        thumbnail: String,
+      },
+    ],
   },
   { timestamps: true }
 );
