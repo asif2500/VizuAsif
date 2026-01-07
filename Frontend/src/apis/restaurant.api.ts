@@ -179,6 +179,8 @@ export const save3DModelForRestaurantAPI = (
       if (data.success) {
         onClose();
         setForm({ title: "", glb: null, usdz: null, thumbnail: null });
+        getAllRestaurantAPI()(dispatch);
+      
       } else {
         setError(data.error);
       }
