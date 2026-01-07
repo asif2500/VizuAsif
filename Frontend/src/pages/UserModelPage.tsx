@@ -42,6 +42,7 @@ const UserModelPage = () => {
   //   <OrbitControls />
   // </Canvas>
 
+  console.log(gltfUrl)
   return (
     <div className="flex items-center justify-center w-full h-screen">
       <div className="border rounded-lg  text-center w-full h-full">
