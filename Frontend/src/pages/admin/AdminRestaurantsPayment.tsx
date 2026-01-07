@@ -43,46 +43,6 @@ const AdminRestaurantsPayment = () => {
     list,
   } = useAppSelector((state) => state.restaurant);
 
-  const ddOne = {
-    selected: {
-      _id: "695d24da6c9b6807032e272d",
-      name: "Macdonals",
-      phone: "03232327",
-      password: "$2b$10$IkqgmXleIKrhaWHcuVgenuApN.hEndOw7RzIShsq3CCQcaM24KqVK",
-      role: "RESTAURANT",
-      isActive: false,
-      subscriptionStatus: "inactive",
-      models: [],
-      threeDModels: [],
-      createdAt: "2026-01-06T15:06:02.411Z",
-      updatedAt: "2026-01-06T15:06:02.411Z",
-      __v: 0,
-    },
-  };
-
-  const ddTwo = {
-    selected: {
-      _id: "695697248caa71bbf036ffed",
-      name: "KFC",
-      phone: "04648484848",
-      password: "$2b$10$ngGYb.OoptTNLRaNbtVD0etaWwOSdXcG2UiWDh8PBw3byk27kGN4m",
-      role: "RESTAURANT",
-      isActive: true,
-      subscriptionStatus: "active",
-      models: [
-        {
-          count: 10,
-          pricePlanID: "69566d71b021a90636ec0444",
-          isActive: true,
-          _id: "6956972b8caa71bbf036fff0",
-        },
-      ],
-      createdAt: "2026-01-01T15:47:48.839Z",
-      updatedAt: "2026-01-02T11:38:05.387Z",
-      __v: 1,
-      threeDModels: [],
-    },
-  };
   useEffect(() => {
     if (restaurantID) {
       getRestaurantByIdAPI(restaurantID)(dispatch);
