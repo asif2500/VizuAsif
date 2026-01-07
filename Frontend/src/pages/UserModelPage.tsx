@@ -21,7 +21,7 @@ const UserModelPage = () => {
 
     console.log("QR Code value:", code);
     setGltfUrl(
-      `https://res.cloudinary.com/dyyfyyb8u/image/upload/v1766747116/make_me_a_fruit_bowl_yduqvp.glb`
+      `https://marceltech.com/demo/glbs/steak.glb`
     );
     setUsdzUrl(
       // "https://res.cloudinary.com/dyyfyyb8u/image/upload/v1767017221/MER_static_f3e6qf.usdz"
