@@ -21,12 +21,15 @@ const UserModelPage = () => {
 
     console.log("QR Code value:", code);
     setGltfUrl(
-      `https://marceltech.com/demo/glbs/steak.glb`
+      // `https://marceltech.com/demo/glbs/steak.glb`
+      "https://theguide.us/bible_files/STEAK1.glb"
+      
     );
     setUsdzUrl(
       // "https://res.cloudinary.com/dyyfyyb8u/image/upload/v1767017221/MER_static_f3e6qf.usdz"
       // "https://developer.apple.com/augmented-reality/quick-look/models/teapot/teapot.usdz"
-      "https://marceltech.com/demo/glbs/glove_baseball_mtl_variant.usdz"
+      // "https://marceltech.com/demo/glbs/glove_baseball_mtl_variant.usdz"
+"https://theguide.us/bible_files/STEAK2.usdz"
     );
 
     // NEXT STEP (later)
