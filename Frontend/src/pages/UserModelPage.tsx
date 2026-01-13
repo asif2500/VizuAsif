@@ -20,17 +20,8 @@ const UserModelPage = () => {
     }
 
     console.log("QR Code value:", code);
-    setGltfUrl(
-      // `https://marceltech.com/demo/glbs/steak.glb`
-      "https://theguide.us/bible_files/STEAK1.glb"
-      
-    );
-    setUsdzUrl(
-      // "https://res.cloudinary.com/dyyfyyb8u/image/upload/v1767017221/MER_static_f3e6qf.usdz"
-      // "https://developer.apple.com/augmented-reality/quick-look/models/teapot/teapot.usdz"
-      // "https://marceltech.com/demo/glbs/glove_baseball_mtl_variant.usdz"
-"https://theguide.us/bible_files/STEAK2.usdz"
-    );
+    setGltfUrl("https://marceltech.com/demo/glbs/STEAK1.glb");
+    setUsdzUrl("https://marceltech.com/demo/glbs/STEAK2.usdz");
 
     // NEXT STEP (later)
     // call API using this code
@@ -45,7 +36,6 @@ const UserModelPage = () => {
   //   <OrbitControls />
   // </Canvas>
 
-  console.log(gltfUrl)
   return (
     <div className="flex items-center justify-center w-full h-screen">
       <div className="border rounded-lg  text-center w-full h-full">
@@ -54,7 +44,6 @@ const UserModelPage = () => {
             {/* AR Button */}
             <div className="p-4 flex justify-center">
               {!isIOS && <ARButton glbUrl={gltfUrl} usdzUrl={usdzUrl} />}
-              
             </div>
             {/* 3D Preview */}
             <div className="flex-1">
@@ -66,7 +55,6 @@ const UserModelPage = () => {
                 ar-modes="quick-look"
                 camera-controls
                 style={{ width: "100%", height: "400px" }}
-
               />
             </div>
           </div>
