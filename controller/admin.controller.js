@@ -1,5 +1,5 @@
-import { hash, compare } from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { hash, compare } from "bcryptjs";
 import Admin from "../models/admin.model.js";
 import asyncHandler from "express-async-handler";
 

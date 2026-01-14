@@ -1,5 +1,6 @@
 import cors from "cors";
-import express from "express";
+import express,
+{json,urlencoded,static as expressStatic} from "express";
 
 import connectDB from "./utils/db.js";
 import adminRoutes from "./router/admin.routes.js";
@@ -16,14 +17,14 @@ connectDB();
 app.use(
   cors({
     origin: "http://localhost:5173",
-    credentials: true, // IMPORTANT: Add this
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Add OPTIONS for preflight
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
+app.use("/uploads", expressStatic("uploads"));
 
 app.use("/api/rest", restaurantRoutes);
 app.use("/api/admin", adminRoutes);

@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import {
   getAllRestaurantAPI,
   getRestaurantByIdAPI,
+  toggleModelActiveAPI,
 } from "@/apis/restaurant.api";
 import { useSearchParams } from "react-router-dom";
 import MarkAsPaidDialog from "@/components/dialougs/mark-as-paid-dialog";
@@ -61,12 +62,21 @@ const AdminRestaurantsPayment = () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Plan</TableHead>
-            <TableHead>Models</TableHead>
-            <TableHead>One-Time Payment</TableHead>
-            <TableHead>Monthly Payment</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-right">Action</TableHead>
+            {[
+              "Plan",
+              "Models",
+              "One-Time Payment",
+              "Monthly Payment",
+              "Status",
+              "Action",
+            ].map((e: string) => (
+              <TableHead
+                key={e}
+                className={`text-${e === "Action" ? "right" : "left"}`}
+              >
+                {e}
+              </TableHead>
+            ))}
           </TableRow>
         </TableHeader>
 
@@ -118,8 +128,7 @@ const AdminRestaurantsPayment = () => {
                         <Switch
                           checked={model.isActive}
                           onCheckedChange={(value) => {
-                            // 🔥 call API to toggle active/inactive
-                            console.log("Toggle:", value);
+                            toggleModelActiveAPI(restaurant._id, model._id, value as boolean)(dispatch);
                           }}
                         />
                       )}

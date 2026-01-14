@@ -49,6 +49,8 @@ const restaurantSchema = new Schema(
         title: String,
         glbUrl: String,
         usdzUrl: String,
+        createdAt: Date,
+        isActive: Boolean,
         thumbnail: String,
       },
     ],

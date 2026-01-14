@@ -155,6 +155,22 @@ export const saveModelForRestaurantAPI = (
   };
 };
 
+export const toggleModelActiveAPI = (restaurantID: string, modelID: string, isActive: boolean) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const { data } = await api.put(`rest/toggle-model-active/${restaurantID}/${modelID}`, {  isActive });
+      if (data.success) {
+        dispatch(getRestaurantByIdAPI(restaurantID));
+        getAllRestaurantAPI()(dispatch);
+      } else {
+        dispatch(setRestaurantError(data.error));
+      }
+    } catch (err: any) {
+      dispatch(setRestaurantError(err.response.data.error));
+    }
+  };
+};
+
 export const save3DModelForRestaurantAPI = (
   restaurantID: string,
   formData: FormData,

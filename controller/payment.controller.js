@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Payment from "../models/payment.model.js";
-import Restaurant from "../models/restaurant.model.js";
+import restaurant from "../models/restaurant.model.js";
 
 export const createPayment = asyncHandler(async (req, res) => {
   const {
@@ -13,8 +13,8 @@ export const createPayment = asyncHandler(async (req, res) => {
   } = req.body;
 
   // 1️⃣ Find restaurant
-  const restaurant = await Restaurant.findById(restaurantID);
-  if (!restaurant) {
+  const restaurantData = await restaurant.findById(restaurantID);
+  if (!restaurantData) {
     return res.status(404).json({
       success: false,
       error: "Restaurant not found",
@@ -22,7 +22,7 @@ export const createPayment = asyncHandler(async (req, res) => {
   }
 
   // 2️⃣ Find pricing plan inside restaurant.models
-  const modelItem = restaurant.models.find(
+  const modelItem = restaurantData.models.find(
     (m) => m.pricePlanID.toString() === pricingPlanID
   );
 
@@ -35,7 +35,7 @@ export const createPayment = asyncHandler(async (req, res) => {
 
   // 3️⃣ Activate model & restaurant
   modelItem.isActive = true;
-  restaurant.isActive = true;
+  restaurantData.isActive = true;
   restaurant.subscriptionStatus = "active";
 
   // 4️⃣ Calculate amounts
@@ -58,7 +58,7 @@ export const createPayment = asyncHandler(async (req, res) => {
   });
 
   // 6️⃣ Save restaurant
-  await restaurant.save();
+  await restaurantData.save();
 
   res.status(201).json({
     success: true,

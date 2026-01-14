@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import { hash, compare } from "bcryptjs";
-import User from "../models/restaurant.model.js";
+import restaurant from "../models/restaurant.model.js";
 
 export const createRestaurant = asyncHandler(async (req, res) => {
   const { phone, password, name } = req.body;
@@ -9,8 +9,8 @@ export const createRestaurant = asyncHandler(async (req, res) => {
     return res.status(400).json({ success: false, error: "Missing fields" });
   }
 
-  const nameExists = await User.findOne({ name });
-  const phoneExists = await User.findOne({ phone });
+  const nameExists = await restaurant.findOne({ name });
+  const phoneExists = await restaurant.findOne({ phone });
   if (nameExists || phoneExists) {
     return res
       .status(400)
@@ -19,7 +19,7 @@ export const createRestaurant = asyncHandler(async (req, res) => {
 
   const hashedPassword = await hash(password, 10);
 
-  const restaurant = await User.create({
+  const restaurantData = await restaurant.create({
     phone,
     password: hashedPassword,
     name,
@@ -31,7 +31,7 @@ export const createRestaurant = asyncHandler(async (req, res) => {
   res.status(201).json({
     success: true,
     message: "Restaurant created",
-    data: restaurant,
+    data: restaurantData,
   });
 });
 
@@ -42,14 +42,14 @@ export const loginRestaurant = asyncHandler(async (req, res) => {
     return res.status(400).json({ success: false, error: "Missing fields" });
   }
 
-  const restaurant = await User.findOne({ phone });
-  if (!restaurant) {
+  const restaurantData = await restaurant.findOne({ phone });
+  if (!restaurantData) {
     return res
       .status(400)
       .json({ success: false, error: "Restaurant not found" });
   }
 
-  const isMatch = await compare(password, restaurant.password);
+  const isMatch = await compare(password, restaurantData.password);
   if (!isMatch) {
     return res
       .status(400)
@@ -58,66 +58,66 @@ export const loginRestaurant = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     message: "Restaurant logged in",
-    restaurantId: restaurant._id,
+    restaurantId: restaurantData._id,
   });
 });
 
-export const updateRestaurant = asyncHandler(async (req, res) => {
+export const updateRestaurantById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { name, phone, password } = req.body;
 
-  const restaurant = await User.findById(id);
-  if (!restaurant) {
+  const restaurantData = await restaurant.findById(id);
+  if (!restaurantData) {
     return res
       .status(400)
       .json({ success: false, error: "Restaurant not found" });
   }
 
   if (name) {
-    restaurant.name = name;
+    restaurantData.name = name;
   }
   if (phone) {
-    restaurant.phone = phone;
+    restaurantData.phone = phone;
   }
   if (password) {
     const hashedPassword = await hash(password, 10);
-    restaurant.password = hashedPassword;
+    restaurantData.password = hashedPassword;
   }
 
-  await restaurant.save();
+  await restaurantData.save();
 
   res.status(200).json({
     success: true,
     message: "Restaurant updated",
-    data: restaurant,
+    data: restaurantData,
   });
 });
 
 export const getAllRestaurant = asyncHandler(async (req, res) => {
-  const restaurants = await User.find({ role: "RESTAURANT" }).populate(
+  const restaurantsData = await restaurant.find({ role: "RESTAURANT" }).populate(
     "models.pricePlanID"
   );
   res.status(200).json({
     success: true,
-    data: restaurants.reverse(),
+    data: restaurantsData.reverse(),
   });
 });
 
 export const getRestaurantById = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const restaurant = await User.findById(id);
-  if (!restaurant) {
+  const restaurantData = await restaurant.findById(id);
+  if (!restaurantData) {
     return res
       .status(400)
       .json({ success: false, error: "Restaurant not found" });
   }
-  res.status(200).json({ success: true, data: restaurant });
+  res.status(200).json({ success: true, data: restaurantData });
 });
 
 export const deleteRestaurant = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const restaurant = await User.findByIdAndDelete(id);
-  if (!restaurant) {
+  const restaurantData = await restaurant.findByIdAndDelete(id);
+  if (!restaurantData) {
     return res
       .status(400)
       .json({ success: false, error: "Restaurant not found" });
@@ -129,43 +129,94 @@ export const applyForModel = asyncHandler(async (req, res) => {
   const { restaurantID } = req.params;
   const { pricePlanID, count } = req.body;
 
-  const restaurant = await User.findById(restaurantID);
-  if (!restaurant) {
+  const restaurantData = await restaurant.findById(restaurantID);
+  if (!restaurantData) {
     return res
       .status(400)
       .json({ success: false, error: "Restaurant not found" });
   }
 
-  restaurant.models.push({ pricePlanID: pricePlanID, count });
-  await restaurant.save();
+  restaurantData.models.push({ pricePlanID: pricePlanID, count });
+  await restaurantData.save();
 
   res.status(200).json({
     success: true,
     message: "Model applied",
-    data: restaurant,
+    data: restaurantData,
   });
 });
 
 export const uploadModelFile = asyncHandler(async (req, res) => {
   const { restaurantID } = req.params;
-  const file = req.file;
   const { title } = req.body;
+  const { glb, usdz, thumbnail } = req.files;
 
-  const restaurant = await User.findById(restaurantID);
-  if (!restaurant) {
+  const restaurantData = await restaurant.findById(restaurantID);
+  if (!restaurantData) {
     return res
-      .status(400)
+      .status(404)
       .json({ success: false, error: "Restaurant not found" });
   }
 
-  restaurant.threeDModels.push({ file: file.path });
-  await restaurant.save();
+  if (!glb || !usdz || !thumbnail) {
+    return res.status(400).json({
+      success: false,
+      error: "All 3 files (glb, usdz, thumbnail) are required",
+    });
+  }
+
+  const modelData = {
+    title,
+    glb: glb[0].path,
+    usdz: usdz[0].path,
+    thumbnail: thumbnail[0].path,
+    createdAt: new Date(),
+  };
+
+  restaurantData.threeDModels.push(modelData);
+  await restaurantData.save();
+
+  res.status(201).json({
+    success: true,
+    message: "3D model uploaded successfully",
+    model: modelData,
+  });
 });
 
 export const getModelFile = asyncHandler(async (req, res) => {
   const { restaurantID } = req.params;
+  const restaurantData = await restaurant.findById(restaurantID);
+  if (!restaurantData) {
+    return res
+      .status(404)
+      .json({ success: false, error: "Restaurant not found" });
+  }
+  res.status(200).json({ success: true, data: restaurantData.threeDModels });
 });
 
 export const deleteModelFile = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const { restaurantID } = req.params;
+  const restaurantData = await restaurant.findById(restaurantID);
+  if (!restaurantData) {
+    return res
+      .status(404)
+      .json({ success: false, error: "Restaurant not found" });
+  }
+  restaurantData.threeDModels = restaurantData.threeDModels.filter(
+    (model) => model._id.toString() !== id
+  );
+  await restaurantData.save();
+  res.status(200).json({ success: true, message: "Model deleted" });
+});
+
+export const toggleModelActive = asyncHandler(async (req, res) => {
+  const { restaurantID, modelID } = req.params;
+  const { isActive } = req.body;
+  const restaurantData = await restaurant.findById(restaurantID);
+  if (!restaurantData) {
+    return res.status(404).json({ success: false, error: "Restaurant not found" });
+  }
+  restaurantData.threeDModels.find(model => model._id.toString() === modelID).isActive = isActive;
+  await restaurantData.save();
+  res.status(200).json({ success: true, message: "Model activated" });
 });

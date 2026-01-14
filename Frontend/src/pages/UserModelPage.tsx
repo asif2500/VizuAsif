@@ -27,7 +27,6 @@ const UserModelPage = () => {
     // call API using this code
     // fetchUserByQr(code)
   }, [code]);
-  // setGltfUrl(`https://marceltech.com/demo/glbs/sarfaraz.glb`);
 
   //   <Canvas>
   //   <ambientLight intensity={0.8} />
